@@ -14,7 +14,11 @@ class Pages extends BaseController
 
 	public function index()
 	{
-		echo view('pages/index');
+		$date = time();
+		$bulan = date("m", $date);
+		$data ['kwh'] = $this->mainModel->kwh_bulan($bulan);
+		$data ['jumlah'] = $this->mainModel->biaya_bulan($bulan);
+		return view('pages/index', $data);
 	}
 
 	// Arus
@@ -22,26 +26,22 @@ class Pages extends BaseController
 	{
 		return view('pages/arus');
 	}
-	public function save_arus($data_arus, $data_tegangan)
+	public function save_arus($data_arus, $data_daya)
 	{
 		// echo "arus: $data_arus, tegangan: $data_tegangan";
 		$date = time();
 		$kirimdata['data_arus'] = $data_arus;
-		$kirimdata['data_tegangan'] = $data_tegangan;
-		$kirimdata['tanggal'] = date("Y-m-d", $date);
-		$kirimdata['jam'] = date("h:i:sa");
-		// $this->mainModel->save($kirimdata);
-		// if (isset($data_arus) && isset($data_tegangan)) {
-			
-			$this->mainModel->addArus($kirimdata);
-			return redirect()->to('/');
-		// }
+		$kirimdata['data_daya'] = $data_daya;
+		$kirimdata['bulan'] = date("m", $date);
+		// $kirimdata['jam'] = date("h:i:sa");
+		$this->mainModel->addArus($kirimdata);
+		return redirect()->to('/');
 	}
 
 	// Tegangan
-	public function tegangan()
+	public function daya()
 	{
-		return view('pages/tegangan');
+		return view('pages/daya');
 	}
 	public function laporan_arus()
 	{

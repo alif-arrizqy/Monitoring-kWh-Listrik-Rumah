@@ -1,23 +1,33 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
-
+<?php
+    $date = time();
+    $bln = date("F", $date);
+    $bulan = date("m", $date);
+    // foreach (as $result) {
+?>
 <!-- Content -->
 <div class="content">
     <!-- Animated -->
     <div class="animated fadeIn">
         <!-- Widgets  -->
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <div class="stat-icon dib flat-color-1">
-                                <i class="pe-7s-gleam"></i>
+                                <i class="pe-7s-cash"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">220</span> Watt</div>
-                                    <div class="stat-heading">Arus</div>
+                                    <div class="stat-text"><span class="count">Rp. 
+                                    <?php foreach ($jumlah->getResult() as $rs)
+                                        { 
+                                            echo number_format($rs->total_jumlah);
+                                        } ?>
+                                    </span></div>
+                                    <div class="stat-heading">Total Biaya Listrik Bulan <?php echo $bln ?> (Rupiah)</div>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
@@ -34,8 +44,13 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">220</span> Watt</div>
-                                    <div class="stat-heading">Tegangan</div>
+                                    <div class="stat-text"><span class="count">
+                                        <?php foreach ($kwh->getResult() as $rs)
+                                        { 
+                                            echo number_format(ceil($rs->total_kwh_bulan));
+                                        } ?>
+                                    </span> kWh</div>
+                                    <div class="stat-heading">Total Pemakaian Listrik Bulan <?php echo $bln ?> (kWh)</div>
                                 </div>
                             </div>
                         </div>
@@ -43,41 +58,42 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-five">
-                            <div class="stat-icon dib flat-color-3">
-                                <i class="pe-7s-browser"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">349</span></div>
-                                    <div class="stat-heading">Templates</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <div class="stat-icon dib flat-color-4">
-                                <i class="pe-7s-users"></i>
+                                <i class="pe-7s-graph3"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">2986</span></div>
-                                    <div class="stat-heading">Clients</div>
+                                    <div class="stat-text"><span class="count">230</span> kWh</div>
+                                    <div class="stat-heading">Pemakaian Listrik Saat Ini</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-five">
+                            <div class="stat-icon dib flat-color-3">
+                                <i class="pe-7s-home"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="text-left dib">
+                                    <div class="stat-text"><span class="count">1300</span> VA</div>
+                                    <div class="stat-heading">Daya Listrik Rumah</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- /Widgets -->
         <div class="row">
@@ -129,7 +145,7 @@
             </div><!-- /# column -->
         </div>
         <!--  Arus  -->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -141,13 +157,13 @@
                                 <div id="arus" class="cpu-load"></div>
                             </div>
                         </div>
-                    </div> <!-- /.row -->
+                    </div>
                 </div>
-            </div><!-- /# column -->
-        </div>
+            </div>
+        </div> -->
         <!--  /Arus -->
         <!--  Tegangan  -->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -162,7 +178,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!--  /Tegangan -->
 
     </div>
