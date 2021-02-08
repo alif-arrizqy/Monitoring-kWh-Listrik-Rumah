@@ -36,9 +36,9 @@ $routes->get('/', 'Pages::index');
 $routes->get('/Pages/arus', 'Pages::arus');
 $routes->get('/Pages/save_arus/(:segment)/(:segment)', 'Pages::save_arus/$1/$2');
 
-$routes->get('/Pages/tegangan', 'Pages::tegangan');
-$routes->get('/Pages/laporan_arus', 'Pages::laporan_arus');
-$routes->get('/Pages/laporan_tegangan', 'Pages::laporan_tegangan');
+$routes->get('/Pages/daya', 'Pages::daya');
+// $routes->get('/Pages/laporan_arus', 'Pages::laporan_arus');
+// $routes->get('/Pages/laporan_tegangan', 'Pages::laporan_tegangan');
 
 /*
  * --------------------------------------------------------------------

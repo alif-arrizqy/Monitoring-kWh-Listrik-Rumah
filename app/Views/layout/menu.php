@@ -6,12 +6,18 @@
                 <li class="active">
                     <a href="<?= base_url('/') ?>"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                 </li>
-                <li class="menu-title">Detail Data</li><!-- /.menu-title -->
+                
+                <li class="menu-title">Token</li>
+                <li>
+                    <a href="<?= base_url('/pages/input_token') ?>"><i class="menu-icon fa fa-pencil"></i>Token </a>
+                </li>
+
+                <li class="menu-title">Detail Data</li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Detail</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-exclamation-triangle"></i><a href="<?= base_url('/pages/arus') ?>">Arus</a></li>
-                        <li><i class="fa fa-bolt"></i><a href="/pages/tegangan">Tegangan</a></li>
+                        <li><i class="fa fa-bolt"></i><a href="/pages/daya">Daya</a></li>
                     </ul>
                 </li>
 
