@@ -21,6 +21,37 @@ class Pages extends BaseController
 		return view('pages/index', $data);
 	}
 
+	// Token
+	public function token()
+	{
+		return view('pages/token');
+	}
+
+	public function save_token()
+	{
+		// $jumlah = $this->request->getPost('inputJumlah');
+		$date = time();
+		$tarif = 1467.28;
+		$jumlah = $this->request->getPost('inputJumlah');
+		round($kwh = $jumlah / $tarif);
+
+		$kirimdata = [
+			'jumlah' => $jumlah,
+			'kwh' => $kwh,
+			'tanggal' => date("d", $date),
+			'bulan' => date("m", $date)
+		];
+		$this->mainModel->addToken_temp($kirimdata);
+		$success = $this->mainModel->addToken($kirimdata);
+		if($success){
+			session()->setFlashData('sukses', 'Data berhasil disimpan');
+			return redirect()->to('/pages/token');
+		} else {
+			session()->setFlashData('gagal', 'Data gagal disimpan');
+			return redirect()->to('/pages/token');
+		}
+	}
+
 	// Arus
 	public function arus()
 	{

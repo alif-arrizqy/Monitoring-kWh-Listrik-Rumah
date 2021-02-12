@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
+$routes->get('/Pages/token', 'Pages::token');
+$routes->get('/Pages/save_token', 'Pages::save_token');
 $routes->get('/Pages/arus', 'Pages::arus');
 $routes->get('/Pages/save_arus/(:segment)/(:segment)', 'Pages::save_arus/$1/$2');
 

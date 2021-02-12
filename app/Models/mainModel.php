@@ -14,6 +14,18 @@ class mainModel extends Model
             $query = $this->db->table($this->table)->insert($kirimdata);
             return $query;
         }
+        
+        public function addToken($kirimdata)
+        {
+            $query = $this->db->table('token')->insert($kirimdata);
+            return $query;
+        }
+
+        public function addToken_temp($kirimdata)
+        {
+            $query = $this->db->table('token_temp')->insert($kirimdata);
+            return $query;
+        }
 
         public function getDataListrik()
         {

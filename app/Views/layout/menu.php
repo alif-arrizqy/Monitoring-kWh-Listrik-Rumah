@@ -3,13 +3,13 @@
     <nav class="navbar navbar-expand-sm navbar-default">
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li>
                     <a href="<?= base_url('/') ?>"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                 </li>
                 
                 <li class="menu-title">Token</li>
                 <li>
-                    <a href="<?= base_url('/pages/input_token') ?>"><i class="menu-icon fa fa-pencil"></i>Token </a>
+                    <a href="<?= base_url('/pages/token') ?>"><i class="menu-icon fa fa-pencil"></i>Token </a>
                 </li>
 
                 <li class="menu-title">Detail Data</li>
@@ -21,14 +21,14 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">Laporan</li><!-- /.menu-title -->
+                <!-- <li class="menu-title">Laporan</li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Laporan</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-fort-awesome"></i><a href="/home/laporan_arus">Arus</a></li>
                         <li><i class="menu-icon ti-themify-logo"></i><a href="/home/laporan_tegangan">Tegangan</a></li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

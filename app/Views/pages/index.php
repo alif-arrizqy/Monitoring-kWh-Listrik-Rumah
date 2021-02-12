@@ -3,8 +3,6 @@
 <?php
     $date = time();
     $bln = date("F", $date);
-    $bulan = date("m", $date);
-    // foreach (as $result) {
 ?>
 <!-- Content -->
 <div class="content">
@@ -21,12 +19,12 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">Rp. 
-                                    <?php foreach ($jumlah->getResult() as $rs)
+                                    <div class="stat-text">Rp. 
+                                        <?php foreach ($jumlah->getResult() as $rs)
                                         { 
                                             echo number_format($rs->total_jumlah);
                                         } ?>
-                                    </span></div>
+                                    </div>
                                     <div class="stat-heading">Total Biaya Listrik Bulan <?php echo $bln ?> (Rupiah)</div>
                                 </div>
                             </div>
@@ -44,12 +42,16 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">
+                                    <div class="stat-text">
                                         <?php foreach ($kwh->getResult() as $rs)
                                         { 
-                                            echo number_format(ceil($rs->total_kwh_bulan));
+                                            $nilai_kwh = $rs->total_kwh_bulan;
+                                            // menghitung kwh listrik
+                                            $total = $nilai_kwh / 1000;
+                                            echo round($total, 3);
                                         } ?>
-                                    </span> kWh</div>
+                                        kWh
+                                    </div>
                                     <div class="stat-heading">Total Pemakaian Listrik Bulan <?php echo $bln ?> (kWh)</div>
                                 </div>
                             </div>
@@ -93,9 +95,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- /Widgets -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -142,7 +142,7 @@
                         </div>
                     </div> <!-- /.row -->
                 </div>
-            </div><!-- /# column -->
+            </div>
         </div>
         <!--  Arus  -->
         <!-- <div class="row">
