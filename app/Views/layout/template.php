@@ -6,9 +6,7 @@
     <title>Monitoring Listrik PLN</title>
     <meta name="description" content="Skripsi Monitoring Listrik PLN">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="icon" href="<?= base_url('/public/assets/images/eco-house.png') ?>" type="image/png">
 
     <!-- CSS -->
     <?= $this->include('layout/css') ?>
