@@ -33,6 +33,13 @@ class mainModel extends Model
             return $query;
         }
 
+        public function getDataToken()
+        {
+            // tampilkan data dari tabel token_temp, 1 data yg terbaru (berdasarkan id)
+            $query = $this->db->query("SELECT * FROM token ORDER BY id DESC LIMIT 1");
+            return $query;
+        }
+
         public function kwh_bulan($bulan)
         {
             $query = $this->db->query("SELECT SUM(data_daya) AS total_kwh_bulan FROM listrik WHERE bulan = '$bulan'");

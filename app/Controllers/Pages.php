@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Controllers;
+
 date_default_timezone_set("Asia/Jakarta");
 
 use App\Models\mainModel;
 
 class Pages extends BaseController
-{ 
+{
 	protected $mainModel;
 	public function __construct()
 	{
@@ -16,8 +18,9 @@ class Pages extends BaseController
 	{
 		$date = time();
 		$bulan = date("m", $date);
-		$data ['kwh'] = $this->mainModel->kwh_bulan($bulan);
-		$data ['jumlah'] = $this->mainModel->biaya_bulan($bulan);
+		$data['kwh'] = $this->mainModel->kwh_bulan($bulan);
+		$data['jumlah'] = $this->mainModel->biaya_bulan($bulan);
+		$data['token'] = $this->mainModel->getDataToken();
 		return view('pages/index', $data);
 	}
 
@@ -43,7 +46,7 @@ class Pages extends BaseController
 		];
 		$this->mainModel->addToken_temp($kirimdata);
 		$success = $this->mainModel->addToken($kirimdata);
-		if($success){
+		if ($success) {
 			session()->setFlashData('sukses', 'Data berhasil disimpan');
 			return redirect()->to('/pages/token');
 		} else {
@@ -51,7 +54,7 @@ class Pages extends BaseController
 			return redirect()->to('/pages/token');
 		}
 	}
-
+	
 	// Arus
 	public function arus()
 	{

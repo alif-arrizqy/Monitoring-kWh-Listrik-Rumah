@@ -1,8 +1,8 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
 <?php
-    $date = time();
-    $bln = date("F", $date);
+$date = time();
+$bln = date("F", $date);
 ?>
 <!-- Content -->
 <div class="content">
@@ -19,9 +19,8 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text">Rp. 
-                                        <?php foreach ($jumlah->getResult() as $rs)
-                                        { 
+                                    <div class="stat-text">Rp.
+                                        <?php foreach ($jumlah->getResult() as $rs) {
                                             echo number_format($rs->total_jumlah);
                                         } ?>
                                     </div>
@@ -43,8 +42,7 @@
                             <div class="stat-content">
                                 <div class="text-left dib">
                                     <div class="stat-text">
-                                        <?php foreach ($kwh->getResult() as $rs)
-                                        { 
+                                        <?php foreach ($kwh->getResult() as $rs) {
                                             $nilai_kwh = $rs->total_kwh_bulan;
                                             // menghitung kwh listrik
                                             $total = $nilai_kwh / 1000;
@@ -69,8 +67,42 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">230</span> kWh</div>
-                                    <div class="stat-heading">Pemakaian Listrik Saat Ini</div>
+                                    <div class="stat-text">
+                                        <?php foreach ($token->getResult() as $rs) {
+                                            $id = $rs->id;
+                                            $nilai_kwh = $rs->kwh;
+                                            // hitung nilai kwh sekarang
+                                            $nilai_kwh_skrg = $nilai_kwh - $total;
+                                            echo $nilai_kwh_akhir = round($nilai_kwh_skrg, 3);
+
+                                            // mencari batas nilai terkecil dari kwh, 10% dari nilai awal kwh
+                                            $nilai_batas_kwh = (10 / 100) * $nilai_kwh;
+                                            if ($nilai_kwh_akhir < $nilai_batas_kwh) {
+                                                // notifikasi dikirim ke bot telegram
+                                                $date = date('d F Y') . '%0A';
+                                                $token = '1552089196:AAEx8Pr_c4AnfoAvGS4qlJkEdkjxIBRqoFo';
+                                                $message = $date . 'Halo sisa kWh Listrik Rumah kamu tinggal ' . $nilai_kwh_akhir .
+                                                    ' kWh. %0AJangan lupa melakukan isi token listrik ya';
+                                                $api = 'https://api.telegram.org/bot' . $token . '/sendMessage?chat_id=908456455&text=' . $message . '';
+                                                $ch = curl_init($api);
+                                                curl_setopt($ch, CURLOPT_HEADER, false);
+                                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                                curl_setopt($ch, CURLOPT_POST, 1);
+                                                // curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
+                                                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                                                $result = curl_exec($ch);
+                                                curl_close($ch);
+                                                // var_dump($api);
+
+                                                // auto refresh web setiap 1 menit
+                                                $url = $_SERVER['REQUEST_URI'];
+                                                header("Refresh: 60; URL=$url");
+                                                redirect()->to('/');
+                                            }
+                                        }
+                                        ?>
+                                        kWh</div>
+                                    <div class="stat-heading">Pemakaian Listrik Saat Ini (kWh)</div>
                                 </div>
                             </div>
                         </div>
