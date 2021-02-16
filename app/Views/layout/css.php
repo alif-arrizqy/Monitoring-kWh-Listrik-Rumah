@@ -6,5 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
 <link rel="stylesheet" href="<?= base_url('public/assets/css/cs-skin-elastic.css')?>">
 <link rel="stylesheet" href="<?= base_url('public/assets/css/style.css')?>">
-<link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+<!-- Data Table -->
+<link rel="stylesheet" href="<?= base_url('public/assets/css/lib/datatable/dataTables.bootstrap.min.css')?>">
+<!-- Chart -->
+<script src="<?= base_url('public/assets/chart/dist/Chart.min.js') ?>"></script>

@@ -17,3 +17,13 @@ if(GAGAL){
 		type : 'error'
 	});
 }
+
+const HAPUS = $('.flash-data-success').data('hapus');
+console.log(HAPUS);
+if(HAPUS){
+	Swal.fire({
+		title : 'Pemberitahuan',
+		text : HAPUS,
+		type : 'success'
+	});
+}

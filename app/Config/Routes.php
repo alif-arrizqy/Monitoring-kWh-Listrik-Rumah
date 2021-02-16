@@ -35,7 +35,6 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Pages::index');
 $routes->get('/Pages/token', 'Pages::token');
 $routes->get('/Pages/save_token', 'Pages::save_token');
-$routes->get('/Pages/arus', 'Pages::arus');
 $routes->get('/Pages/save_arus/(:segment)/(:segment)', 'Pages::save_arus/$1/$2');
 
 $routes->get('/Pages/daya', 'Pages::daya');

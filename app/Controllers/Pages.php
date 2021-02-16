@@ -12,6 +12,7 @@ class Pages extends BaseController
 	public function __construct()
 	{
 		$this->mainModel = new mainModel();
+		helper('form');
 	}
 
 	public function index()
@@ -21,13 +22,16 @@ class Pages extends BaseController
 		$data['kwh'] = $this->mainModel->kwh_bulan($bulan);
 		$data['jumlah'] = $this->mainModel->biaya_bulan($bulan);
 		$data['token'] = $this->mainModel->getDataToken();
+		$data['rekap_kwh'] = $this->mainModel->getDataKwh();
+		$data['rekap_jumlah_biaya'] = $this->mainModel->getDataJumlahBiaya();
 		return view('pages/index', $data);
 	}
 
 	// Token
 	public function token()
 	{
-		return view('pages/token');
+		$data['token'] = $this->mainModel->getAllDataToken();
+		return view('pages/token', $data);
 	}
 
 	public function save_token()
@@ -42,9 +46,9 @@ class Pages extends BaseController
 			'jumlah' => $jumlah,
 			'kwh' => $kwh,
 			'tanggal' => date("d", $date),
-			'bulan' => date("m", $date)
+			'bulan' => date("m", $date),
+			'waktu' => date("H:i:s", $date)
 		];
-		$this->mainModel->addToken_temp($kirimdata);
 		$success = $this->mainModel->addToken($kirimdata);
 		if ($success) {
 			session()->setFlashData('sukses', 'Data berhasil disimpan');
@@ -54,7 +58,37 @@ class Pages extends BaseController
 			return redirect()->to('/pages/token');
 		}
 	}
-	
+
+	public function edit_token($id)
+	{
+		$date = time();
+		$tarif = 1467.28;
+		$jumlah = $this->request->getPost('inputJumlah');
+		round($kwh = $jumlah / $tarif);
+
+		$kirimdata = [
+			'id' => $id,
+			'jumlah' => $jumlah,
+			'kwh' => $kwh,
+			'tanggal' => date("d", $date),
+			'bulan' => date("m", $date),
+			'waktu' => date("H:i:s", $date)
+		];
+		$this->mainModel->editToken($kirimdata);
+		session()->setFlashData('sukses', 'Data berhasil disimpan');
+		return redirect()->to('/pages/token');
+	}
+
+	public function delete_token($id)
+	{
+		$kirimdata = [
+			'id' => $id
+		];
+		$this->mainModel->deleteToken($kirimdata);
+		session()->setFlashData('hapus', 'Data berhasil dihapus');
+		return redirect()->to('/pages/token');
+	}
+
 	// Arus
 	public function arus()
 	{

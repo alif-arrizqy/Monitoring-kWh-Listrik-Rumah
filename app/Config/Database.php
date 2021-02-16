@@ -33,16 +33,16 @@ class Database extends Config
 	public $default = [
 		'DSN'      => '',
 		// Database Hosting
-		'hostname' => 'localhost',
-		'username' => 'project50_user_monitoring_listrik',
-		'password' => 'monitoringlistrik123',
-		'database' => 'project50_monitoring_listrik',
+		// 'hostname' => 'localhost',
+		// 'username' => 'projec50_user_monitoring_listrik',
+		// 'password' => 'monitoringlistrik123',
+		// 'database' => 'projec50_monitoring_listrik',
 		// ===================================
 		// Database Local
-		// 'hostname' => 'localhost',
-		// 'username' => 'root',
-		// 'password' => '',
-		// 'database' => 'monitoring_listrik',
+		'hostname' => 'localhost',
+		'username' => 'root',
+		'password' => '',
+		'database' => 'monitoring_listrik',
 		// ===================================
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',

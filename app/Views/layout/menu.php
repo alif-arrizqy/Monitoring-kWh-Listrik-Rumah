@@ -12,14 +12,14 @@
                     <a href="<?= base_url('/pages/token') ?>"><i class="menu-icon fa fa-pencil"></i>Token </a>
                 </li>
 
-                <li class="menu-title">Detail Data</li>
+                <!-- <li class="menu-title">Detail Data</li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Detail</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-exclamation-triangle"></i><a href="<?= base_url('/pages/arus') ?>">Arus</a></li>
                         <li><i class="fa fa-bolt"></i><a href="/pages/daya">Daya</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- <li class="menu-title">Laporan</li>
                 <li class="menu-item-has-children dropdown">

@@ -21,8 +21,16 @@ $bln = date("F", $date);
                                 <div class="text-left dib">
                                     <div class="stat-text">Rp.
                                         <?php foreach ($jumlah->getResult() as $rs) {
-                                            echo number_format($rs->total_jumlah);
-                                        } ?>
+                                            $biaya = $rs->total_jumlah;
+                                            echo number_format($biaya);
+                                        }
+                                        // update data di tabel rekap_kwh
+                                        $dt['jumlah'] = $biaya;
+                                        $date = time();
+                                        $mo = date("M", $date);
+                                        $dbs = \Config\Database::connect();
+                                        $st = $dbs->table('rekap_jumlah_biaya')->where('bulan', $mo)->update($dt);
+                                        ?>
                                     </div>
                                     <div class="stat-heading">Total Biaya Listrik Bulan <?php echo $bln ?> (Rupiah)</div>
                                 </div>
@@ -47,7 +55,14 @@ $bln = date("F", $date);
                                             // menghitung kwh listrik
                                             $total = $nilai_kwh / 1000;
                                             echo round($total, 3);
-                                        } ?>
+                                        }
+                                        // update data di tabel rekap_kwh
+                                        $data['kwh'] = $total;
+                                        $date = time();
+                                        $m = date("M", $date);
+                                        $db = \Config\Database::connect();
+                                        $sa = $db->table('rekap_kwh')->where('bulan', $m)->update($data);
+                                        ?>
                                         kWh
                                     </div>
                                     <div class="stat-heading">Total Pemakaian Listrik Bulan <?php echo $bln ?> (kWh)</div>
@@ -77,7 +92,7 @@ $bln = date("F", $date);
 
                                             // mencari batas nilai terkecil dari kwh, 10% dari nilai awal kwh
                                             $nilai_batas_kwh = (10 / 100) * $nilai_kwh;
-                                            if ($nilai_kwh_akhir < $nilai_batas_kwh) {
+                                            if ($nilai_kwh_skrg <= $nilai_batas_kwh) {
                                                 // notifikasi dikirim ke bot telegram
                                                 $date = date('d F Y') . '%0A';
                                                 $token = '1552089196:AAEx8Pr_c4AnfoAvGS4qlJkEdkjxIBRqoFo';
@@ -128,93 +143,161 @@ $bln = date("F", $date);
                 </div>
             </div>
         </div>
+        <!-- Grafik Grais kWh -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="box-title">Traffic </h4>
+                        <h4 class="box-title">kWh Listrik </h4>
                     </div>
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
                             <div class="card-body">
-                                <canvas id="TrafficChart"></canvas>
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card-body">
-                                <div class="progress-box progress-1">
-                                    <h4 class="por-title">Daya </h4>
-                                    <div class="por-txt">96,930 Users (40%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Bounce Rate</h4>
-                                    <div class="por-txt">3,220 Users (24%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Unique Visitors</h4>
-                                    <div class="por-txt">29,658 Users (60%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Targeted Visitors</h4>
-                                    <div class="por-txt">99,658 Users (90%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div> <!-- /.card-body -->
-                        </div>
-                    </div> <!-- /.row -->
+                    </div>
                 </div>
             </div>
         </div>
-        <!--  Arus  -->
-        <!-- <div class="row">
+        <!-- Grafik Bar Biaya Listrik -->
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="box-title">Realtime Arus </h4>
+                        <h4 class="box-title">Jumlah Biaya Pengisian Token Listrik </h4>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card-body">
-                                <div id="arus" class="cpu-load"></div>
+                                <canvas id="myGrafik"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!--  /Arus -->
-        <!--  Tegangan  -->
-        <!-- <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="box-title">Realtime Tegangan </h4>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card-body">
-                                <div id="tegangan" class="cpu-load"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!--  /Tegangan -->
+        </div>
 
     </div>
 </div> <!-- /.card -->
+
+<!-- Grafik Garis kWh -->
+<?php
+foreach ($rekap_kwh as $rs) {
+    $b[] = $rs['bulan'];
+    $data_kwh[] = $rs['kwh'];
+}
+$thn = date('Y');
+?>
+<?php
+foreach ($rekap_jumlah_biaya as $rs) {
+    $bln_jml[] = $rs['bulan'];
+    $jml_biaya[] = $rs['jumlah'];
+}
+$thn = date('Y');
+?>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode($b) ?>,
+            datasets: [{
+                label: 'Grafik kWh Listrik Selama <?php echo $thn ?>',
+                data: <?php echo json_encode($data_kwh) ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(60, 206, 34, 0.2)',
+                    'rgba(241, 206, 54, 0.2)',
+                    'rgba(19, 11, 88, 0.2)',
+                    'rgba(88, 40, 30, 0.2)',
+                    'rgba(20, 111, 186, 0.2)',
+                    'rgba(51, 196, 86, 0.2)',
+                    'rgba(78, 128, 86, 0.2)',
+                    'rgba(100, 206, 86, 0.2)',
+                    'rgba(135, 16, 77, 0.2)',
+                    'rgba(25, 255, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(60, 206, 34, 1)',
+                    'rgba(241, 206, 54, 1)',
+                    'rgba(19, 11, 88, 1)',
+                    'rgba(88, 40, 30, 1)',
+                    'rgba(20, 111, 186, 1)',
+                    'rgba(51, 196, 86, 1)',
+                    'rgba(78, 128, 86, 1)',
+                    'rgba(100, 206, 86, 1)',
+                    'rgba(135, 16, 77, 1',
+                    'rgba(25, 255, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+    var ctx = document.getElementById("myGrafik").getContext('2d');
+    var myGrafik = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode($bln_jml) ?>,
+            datasets: [{
+                label: 'Grafik Pengisian Token Listrik Selama <?php echo $thn ?>',
+                data: <?php echo json_encode($jml_biaya) ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(60, 206, 34, 0.2)',
+                    'rgba(241, 206, 54, 0.2)',
+                    'rgba(19, 11, 88, 0.2)',
+                    'rgba(88, 40, 30, 0.2)',
+                    'rgba(20, 111, 186, 0.2)',
+                    'rgba(51, 196, 86, 0.2)',
+                    'rgba(78, 128, 86, 0.2)',
+                    'rgba(100, 206, 86, 0.2)',
+                    'rgba(135, 16, 77, 0.2)',
+                    'rgba(25, 255, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(60, 206, 34, 1)',
+                    'rgba(241, 206, 54, 1)',
+                    'rgba(19, 11, 88, 1)',
+                    'rgba(88, 40, 30, 1)',
+                    'rgba(20, 111, 186, 1)',
+                    'rgba(51, 196, 86, 1)',
+                    'rgba(78, 128, 86, 1)',
+                    'rgba(100, 206, 86, 1)',
+                    'rgba(135, 16, 77, 1',
+                    'rgba(25, 255, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 
 <!-- /.content -->
 <div class="clearfix"></div>
