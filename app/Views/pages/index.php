@@ -86,33 +86,61 @@ $bln = date("F", $date);
                                         <?php foreach ($token->getResult() as $rs) {
                                             $id = $rs->id;
                                             $nilai_kwh = $rs->kwh;
+                                            $jml_tok = number_format($jml_token = $rs->jumlah);
                                             // hitung nilai kwh sekarang
                                             $nilai_kwh_skrg = $nilai_kwh - $total;
-                                            echo $nilai_kwh_akhir = round($nilai_kwh_skrg, 3);
-
+                                            if ($nilai_kwh_skrg > 0) {
+                                                echo $nilai_kwh_akhir = round($nilai_kwh_skrg, 3);
+                                            } else if ($nilai_kwh_skrg <= 0) {
+                                                echo $nilai_kwh_akhir = '0';
+                                            }
                                             // mencari batas nilai terkecil dari kwh, 10% dari nilai awal kwh
                                             $nilai_batas_kwh = (10 / 100) * $nilai_kwh;
                                             if ($nilai_kwh_skrg <= $nilai_batas_kwh) {
                                                 // notifikasi dikirim ke bot telegram
-                                                $date = date('d F Y') . '%0A';
-                                                $token = '1552089196:AAEx8Pr_c4AnfoAvGS4qlJkEdkjxIBRqoFo';
-                                                $message = $date . 'Halo sisa kWh Listrik Rumah kamu tinggal ' . $nilai_kwh_akhir .
-                                                    ' kWh. %0AJangan lupa melakukan isi token listrik ya';
-                                                $api = 'https://api.telegram.org/bot' . $token . '/sendMessage?chat_id=908456455&text=' . $message . '';
-                                                $ch = curl_init($api);
-                                                curl_setopt($ch, CURLOPT_HEADER, false);
-                                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                                                curl_setopt($ch, CURLOPT_POST, 1);
-                                                // curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
-                                                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                                                $result = curl_exec($ch);
-                                                curl_close($ch);
-                                                // var_dump($api);
+                                                if ($nilai_kwh_skrg > 0) {
+                                                    $date = date('d F Y') . '%0A';
+                                                    $token = '1552089196:AAEx8Pr_c4AnfoAvGS4qlJkEdkjxIBRqoFo';
+                                                    $message = $date . 'Halo sisa kWh Listrik Rumah kamu dari pengisian Rp.' . $jml_tok . ' sisa ' . $nilai_kwh_akhir .
+                                                        ' kWh. %0AJangan lupa melakukan isi token listrik ya';
+                                                    $api = 'https://api.telegram.org/bot' . $token . '/sendMessage?chat_id=908456455&text=' . $message . '';
+                                                    $ch = curl_init($api);
+                                                    curl_setopt($ch, CURLOPT_HEADER, false);
+                                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                                    curl_setopt($ch, CURLOPT_POST, 1);
+                                                    // curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
+                                                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                                                    $result = curl_exec($ch);
+                                                    curl_close($ch);
+                                                    // var_dump($api);
 
-                                                // auto refresh web setiap 1 menit
-                                                $url = $_SERVER['REQUEST_URI'];
-                                                header("Refresh: 60; URL=$url");
-                                                redirect()->to('/');
+                                                    // auto refresh web setiap 5 menit
+                                                    $url = $_SERVER['REQUEST_URI'];
+                                                    header("Refresh: 300; URL=$url");
+                                                    redirect()->to('/');
+                                                } else if ($nilai_kwh_skrg <= 0) {
+                                                    // notifikasi dikirim ke bot telegram
+                                                    $date = date('d F Y') . '%0A';
+                                                    $token = '1552089196:AAEx8Pr_c4AnfoAvGS4qlJkEdkjxIBRqoFo';
+                                                    $message = $date . 'Halo kWh Listrik Rumah kamu dari pengisian ' . $jml_tok . ' sekarang sudah habis.' .
+                                                        '%0AListrik rumah dalam keadaan mati.' .
+                                                        '%0AJangan lupa melakukan isi token listrik ya';
+                                                    $api = 'https://api.telegram.org/bot' . $token . '/sendMessage?chat_id=908456455&text=' . $message . '';
+                                                    $ch = curl_init($api);
+                                                    curl_setopt($ch, CURLOPT_HEADER, false);
+                                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                                    curl_setopt($ch, CURLOPT_POST, 1);
+                                                    // curl_setopt($ch, CURLOPT_POSTFIELDS, ($params));
+                                                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                                                    $result = curl_exec($ch);
+                                                    curl_close($ch);
+                                                    // var_dump($api);
+
+                                                    // auto refresh web setiap 5 menit
+                                                    $url = $_SERVER['REQUEST_URI'];
+                                                    header("Refresh: 300; URL=$url");
+                                                    redirect()->to('/');
+                                                }
                                             }
                                         }
                                         ?>

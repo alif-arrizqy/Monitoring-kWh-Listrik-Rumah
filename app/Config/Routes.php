@@ -37,6 +37,7 @@ $routes->get('/Pages/token', 'Pages::token');
 $routes->get('/Pages/save_token', 'Pages::save_token');
 $routes->get('/Pages/save_arus/(:segment)/(:segment)', 'Pages::save_arus/$1/$2');
 
+$routes->get('/Main/save_sampah_organik/(:segment)/(:segment)/(:segment)', 'Pages::save_sampah_organik/$1/$2/$3');
 $routes->get('/Pages/daya', 'Pages::daya');
 // $routes->get('/Pages/laporan_arus', 'Pages::laporan_arus');
 // $routes->get('/Pages/laporan_tegangan', 'Pages::laporan_tegangan');

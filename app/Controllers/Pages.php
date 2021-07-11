@@ -119,4 +119,16 @@ class Pages extends BaseController
 	{
 		return view('welcome_message');
 	}
+
+	public function save_sampah_organik($tinggi, $metana, $status)
+	{
+		$date = time();
+		$kirimdata['tinggi'] = $tinggi;
+		$kirimdata['metana'] = $metana;
+		$kirimdata['status'] = $status;
+		$kirimdata['bulan'] = date("m", $date);
+		// $kirimdata['jam'] = date("h:i:sa");
+		$this->mainModel->add_sampah_organik($kirimdata);
+		return redirect()->to('/');
+	}
 }
